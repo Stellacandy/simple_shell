@@ -24,23 +24,24 @@ char *swap_char(char *input, int bool)
 			}
 
 			if (input[i] == '&')
-				input[i] = 12;
-			else
-				i++;
+			{
+				if (input[i + 1] != '&')
+					input[i] = 12;
+				else
+					i++;
+			}
 		}
 	}
-}
-else
-{
-	for (i = 0; input[i]; i++)
+	else
 	{
-		input[i] = (input[i] == 16 ? '|' : input[i]);
-		input[i] = (input[i] == 12 ? '&' : input[i]);
+		for (i = 0; input[i]; i++)
+		{
+			input[i] = (input[i] == 16 ? '|' : input[i]);
+			input[i] = (input[i] == 12 ? '&' : input[i]);
+		}
 	}
+	return (input);
 }
-return (input);
-}
-
 /**
  * add_nodes - add separators and command lines in the lists
  *
@@ -70,12 +71,13 @@ void add_nodes(sep_list **head_s, line_list **head_l, char *input)
 
 	line = _strtok(input, ";|&");
 	do {
-		ine = swap_char(line, 1);
+		line = swap_char(line, 1);
 		add_line_node_end(head_l, line);
 		line = _strtok(NULL, ";|&");
 	} while (line != NULL);
 
 }
+
 
 /**
  * go_next - go to the next command line stored
@@ -129,6 +131,7 @@ void go_next(sep_list **list_s, line_list **list_l, data_shell *datash)
  */
 int split_commands(data_shell *datash, char *input)
 {
+
 	sep_list *head_s, *list_s;
 	line_list *head_l, *list_l;
 	int loop;
@@ -178,7 +181,6 @@ char **split_line(char *input)
 	char **tokens;
 	char *token;
 
-
 	bsize = TOK_BUFSIZE;
 	tokens = malloc(sizeof(char *) * (bsize));
 	if (tokens == NULL)
@@ -208,7 +210,3 @@ char **split_line(char *input)
 
 	return (tokens);
 }
-
-
-
-

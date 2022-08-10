@@ -45,17 +45,15 @@ void free_sep_list(sep_list **head)
 
 	if (head != NULL)
 	{
-		curr = *head;
-		while ((temp = curr) != NULL)
-		{
-			curr = curr->next;
-			free(temp);
-		}
-		*head = NULL;
+	curr = *head;
+	while ((temp = curr) != NULL)
+	{
+	curr = curr->next;
+	free(temp);
+	}
+	*head = NULL;
 	}
 }
-
-
 /**
  * add_line_node_end - adds a command line at the end
  * of a line_list.

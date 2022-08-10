@@ -30,7 +30,6 @@ char *_strcat(char *dest, const char *src)
  */
 char *_strcpy(char *dest, char *src)
 {
-
 	size_t a;
 
 	for (a = 0; src[a] != '\0'; a++)

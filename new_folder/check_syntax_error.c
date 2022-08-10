@@ -1,8 +1,6 @@
 #include "main.h"
-
 /**
  * repeated_char - counts the repetitions of a char
- *
  * @input: input string
  * @i: index
  * Return: repetitions
@@ -14,10 +12,8 @@ int repeated_char(char *input, int i)
 
 	return (i);
 }
-
 /**
  * error_sep_op - finds syntax errors
- *
  * @input: input string
  * @i: index
  * @last: last char read
@@ -67,17 +63,14 @@ int error_sep_op(char *input, int i, char last)
 
 	return (error_sep_op(input + 1, i + 1, *input));
 }
-
 /**
  * first_char - finds index of the first char
- *
  * @input: input string
  * @i: index
  * Return: 1 if there is an error. 0 in other case.
  */
 int first_char(char *input, int *i)
 {
-
 	for (*i = 0; input[*i]; *i += 1)
 	{
 		if (input[*i] == ' ' || input[*i] == '\t')
@@ -91,10 +84,8 @@ int first_char(char *input, int *i)
 
 	return (0);
 }
-
 /**
  * print_syntax_error - prints when a syntax error is found
- *
  * @datash: data structure
  * @input: input string
  * @i: index of the error
@@ -144,11 +135,9 @@ void print_syntax_error(data_shell *datash, char *input, int i, int bool)
 	free(error);
 	free(counter);
 }
-
 /**
  * check_syntax_error - intermediate function to
  * find and print a syntax error
- *
  * @datash: data structure
  * @input: input string
  * Return: 1 if there is an error. 0 in other case

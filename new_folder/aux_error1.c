@@ -13,7 +13,7 @@ char *strcat_cd(data_shell *datash, char *msg, char *error, char *ver_str)
 {
 	char *illegal_flag;
 
-	_strcpy(error, datash->av[0]);
+	strcpy(error, datash->av[0]);
 	_strcat(error, ": ");
 	_strcat(error, ver_str);
 	_strcat(error, ": ");
@@ -37,6 +37,7 @@ char *strcat_cd(data_shell *datash, char *msg, char *error, char *ver_str)
 	_strcat(error, "\0");
 	return (error);
 }
+
 /**
  * error_get_cd - error message for cd command in get_cd
  * @datash: data relevant (directory)
@@ -77,9 +78,9 @@ char *error_get_cd(data_shell *datash)
 }
 
 /**
- * error_not_found - generic error message for command not found
- * @datash: data relevant (counter, arguments)
- * Return: Error message
+ *  error_not_found - generic error message for command not found
+ *  @datash: data relevant (counter, arguments)
+ *  Return: Error message
  */
 char *error_not_found(data_shell *datash)
 {

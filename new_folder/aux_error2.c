@@ -15,7 +15,7 @@ char *error_env(data_shell *datash)
 	ver_str = aux_itoa(datash->counter);
 	msg = ": Unable to add/remove from environment\n";
 	length = _strlen(datash->av[0]) + _strlen(ver_str);
-	length += _strlen(datash->args[0]) + _strlen(msg) + 4;
+	length = _strlen(datash->av[0]) + _strlen(ver_str);
 	error = malloc(sizeof(char) * (length + 1));
 	if (error == 0)
 	{
@@ -35,6 +35,7 @@ char *error_env(data_shell *datash)
 
 	return (error);
 }
+
 /**
  * error_path_126 - error message for path and failure denied permission.
  * @datash: data relevant (counter, arguments).

@@ -10,35 +10,34 @@
  */
 void check_env(r_var **h, char *in, data_shell *data)
 {
-	int row, chr, j, lval;
-	char **_envr;
+		int row, chr, j, lval;
+		char **_envr;
 
-	_envr = data->_environ;
-	for (row = 0; _envr[row]; row++)
-	{
-		for (j = 1, chr = 0; _envr[row][chr]; chr++)
+		_envr = data->_environ;
+		for (row = 0; _envr[row]; row++)
 		{
-			if (_envr[row][chr] == '=')
+			for (j = 1, chr = 0; _envr[row][chr]; chr++)
 			{
-				lval = _strlen(_envr[row] + chr + 1);
-				add_rvar_node(h, j, _envr[row] + chr + 1, lval);
-				return;
+				if (_envr[row][chr] == '=')
+				{
+					lval = _strlen(_envr[row] + chr + 1);
+					add_rvar_node(h, j, _envr[row] + chr + 1, lval);
+					return;
+				}
+				if (in[j] == _envr[row][chr])
+					j++;
+				else
+					break;
 			}
+		}
 
-			if (in[j] == _envr[row][chr])
-				j++;
-			else
+		for (j = 0; in[j]; j++)
+		{
+			if (in[j] == ' ' || in[j] == '\t' || in[j] == ';' || in[j] == '\n')
 				break;
 		}
-	}
 
-	for (j = 0; in[j]; j++)
-	{
-		if (in[j] == ' ' || in[j] == '\t' || in[j] == ';' || in[j] == '\n')
-			break;
-	}
-
-	add_rvar_node(h, j, NULL, 0);
+		add_rvar_node(h, j, NULL, 0);
 }
 
 /**
@@ -94,45 +93,46 @@ int check_vars(r_var **h, char *in, char *st, data_shell *data)
  */
 char *replaced_input(r_var **head, char *input, char *new_input, int nlen)
 {
-	r_var *indx;
-	int i, j, k;
 
-	indx = *head;
-	for (j = i = 0; i < nlen; i++)
-	{
-		if (input[j] == '$')
+		r_var *indx;
+		int i, j, k;
+
+		indx = *head;
+		for (j = i = 0; i < nlen; i++)
 		{
-			if (!(indx->len_var) && !(indx->len_val))
+			if (input[j] == '$')
+			{
+				if (!(indx->len_var) && !(indx->len_val))
+				{
+					new_input[i] = input[j];
+					j++;
+				}
+				else if (indx->len_var && !(indx->len_val))
+				{
+					for (k = 0; k < indx->len_var; k++)
+						j++;
+					i--;
+				}
+				else
+				{
+					for (k = 0; k < indx->len_val; k++)
+					{
+						new_input[i] = indx->val[k];
+						i++;
+					}
+					j += (indx->len_var);
+					i--;
+				}
+				indx = indx->next;
+			}
+			else
 			{
 				new_input[i] = input[j];
 				j++;
 			}
-			else if (indx->len_var && !(indx->len_val))
-			{
-				for (k = 0; k < indx->len_var; k++)
-					j++;
-				i--;
-			}
-			else
-			{
-				for (k = 0; k < indx->len_val; k++)
-				{
-					new_input[i] = indx->val[k];
-					i++;
-				}
-				j += (indx->len_var);
-				i--;
-			}
-			indx = indx->next;
 		}
-		else
-		{
-			new_input[i] = input[j];
-			j++;
-		}
-	}
 
-	return (new_input);
+		return (new_input);
 }
 
 /**
@@ -181,3 +181,5 @@ char *rep_var(char *input, data_shell *datash)
 
 	return (new_input);
 }
+
+
